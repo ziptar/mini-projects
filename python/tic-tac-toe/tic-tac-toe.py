@@ -20,7 +20,6 @@ def display_board(board):
 def enter_move(board):
     # The function accepts the board's current status, asks the user about their move, 
     # checks the input, and updates the board according to the user's decision.
-    global free_fields
     while True:
         input_key = input("Enter your move (one of the digits displayed), or 'q' to quit the game: ")
         if input_key == "q" or input_key == "Q":
@@ -36,7 +35,7 @@ def enter_move(board):
                 display_board(board)
                 continue
             board[row][col] = "o"
-            free_fields = make_list_of_free_fields(board)
+            make_list_of_free_fields(board)
             display_board(board)
             return True
         except ValueError:
@@ -45,13 +44,13 @@ def enter_move(board):
 def make_list_of_free_fields(board):
     # The function browses the board and builds a list of all the free squares; 
     # the list consists of tuples, while each tuple is a pair of row and column numbers.
+    global free_fields
     free_fields = []
     for i in range(3):
         for j in range(3):
             if board[i][j] != "x" and board[i][j] != "o":
                 free_fields.append((i, j))
                                    
-    return free_fields
 
 def victory_for(board, sign):
     # The function analyzes the board's status in order to check if 
@@ -84,7 +83,7 @@ def draw_move(board):
         r = randint(0, end)
     row, col = free_fields[r]
     board[row][col] = "x"
-    free_fields = make_list_of_free_fields(board)
+    make_list_of_free_fields(board)
     display_board(board)
     
 def victory_message(msg):
